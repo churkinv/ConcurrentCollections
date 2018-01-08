@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConcurrentCollections", "ConcurrentCollections\ConcurrentCollections.csproj", "{FBEAA79D-D47F-4109-82F0-D80E5F95A659}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConcurrentDictionary", "ConcurrentDictionary\ConcurrentDictionary.csproj", "{3D932E26-A44E-4621-BDBD-7AD9CF3F1E37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{FBEAA79D-D47F-4109-82F0-D80E5F95A659}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBEAA79D-D47F-4109-82F0-D80E5F95A659}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBEAA79D-D47F-4109-82F0-D80E5F95A659}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D932E26-A44E-4621-BDBD-7AD9CF3F1E37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D932E26-A44E-4621-BDBD-7AD9CF3F1E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D932E26-A44E-4621-BDBD-7AD9CF3F1E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D932E26-A44E-4621-BDBD-7AD9CF3F1E37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
