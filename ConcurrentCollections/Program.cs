@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace ConcurrentCollections
     {
         static void Main(string[] args)
         {
-            var orders = new Queue<string>();
+            var orders = new ConcurrentQueue<string>();
             //PlaceOrders(orders, "Mark1");
             //PlaceOrders(orders, "Sergii1");
             Task task1 = Task.Run(() => PlaceOrders(orders, "Mark2"));
@@ -26,7 +27,7 @@ namespace ConcurrentCollections
             Console.ReadKey();
         }
 
-        private static void PlaceOrders(Queue<string> orders, string customerName)
+        private static void PlaceOrders(ConcurrentQueue<string> orders, string customerName)
         {
             for (int i = 0; i < 5; i++)
             {
