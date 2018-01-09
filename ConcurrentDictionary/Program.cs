@@ -19,7 +19,7 @@ namespace ConcurrentDictionary
             Console.WriteLine($"No. of shirts in stock = {stock.Count}");
 
             stock.Add("Let`sGetShifty", 6);
-            stock["BirdMan"] = 5;
+            stock["BirdMan"] = 5; // adding by using an indexer
 
             stock["Let`sGetShifty"] = 12; // up from 6, 6 were bought
             Console.WriteLine($"\r\nstock[Let`sGetShifty] = {stock["Let`sGetShifty"]}");
@@ -34,5 +34,5 @@ namespace ConcurrentDictionary
             Console.WriteLine($"No. of shirts in stock = {stock.Count}");
             Console.ReadKey();
         }
-    }
+    }    
 }
