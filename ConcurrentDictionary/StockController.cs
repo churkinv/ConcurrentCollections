@@ -21,10 +21,27 @@ namespace ConcurrentDictionary
             Interlocked.Add(ref _totalQuantityBought, quantity);
         }
 
-        public void TrySellItem(string item)
+        public bool TrySellItem(string item)
         {
             bool success = false;
-            //int newStockLevel = _stock.AddOrUpdate(item, )
+            int newStockLevel = _stock.AddOrUpdate(item,
+                (itemName) => { success = false; return 0; },
+                (itemName, oldValue) =>
+                {
+                    if (oldValue == 0)
+                    {
+                        success = false;
+                        return 0;
+                    }
+                    else
+                    {
+                        success = true;
+                        return oldValue - 1;
+                    }
+                });
+            if (success)
+                Interlocked.Increment(ref _totalQuantitySold);
+            return success;
         }
 
         internal void DisplayStatus()
