@@ -44,9 +44,24 @@ namespace ConcurrentDictionary
             return success;
         }
 
+        public bool TrySellItem2(string item)
+        {
+            int newStockLevel = _stock.AddOrUpdate(item, -1, (key, oldValue) => oldValue - 1);
+            if (newStockLevel < 0)
+            {
+                _stock.AddOrUpdate(item, 1, (key, oldValue) => oldValue + 1);
+                return false;
+            }
+            else
+            {
+                Interlocked.Increment(ref _totalQuantitySold);
+                return true;
+            }
+        }
+
         internal void DisplayStatus()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
