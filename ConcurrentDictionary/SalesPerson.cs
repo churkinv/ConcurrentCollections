@@ -33,21 +33,26 @@ namespace ConcurrentDictionary
                 }
                 else
                 {
-                    //bool success = controller.TrySellItem(itemName);
-                    //DisplaySaleAttempt(success, itemName);
+                    bool success = controller.TrySellItem(itemName);
+                    DisplaySaleAttempt(success, itemName);
                 }
 
             }
+            Console.WriteLine($"SalesPerson {this.Name}");
         }
 
         private void DisplaySaleAttempt(bool success, string itemName)
         {
-            throw new NotImplementedException();
+            int threadId = Thread.CurrentThread.ManagedThreadId;
+            if (success)
+                Console.WriteLine(string.Format("Thread {0}: {1} sold {2}", threadId, this.Name, itemName));
+            else
+                Console.WriteLine(string.Format("Thread {0}: {1}: Out of stock of {2}", threadId, this.Name, itemName));
         }
 
         private void DisplayPurchase(string itemName, int quantity)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Thread {0}: {1} bought {2} of {3}", Thread.CurrentThread.ManagedThreadId, this.Name, quantity, itemName);
         }
     }
 }

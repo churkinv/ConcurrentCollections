@@ -48,7 +48,7 @@ namespace ConcurrentDictionary
 
             Task.WaitAll(t1, t2, t3, t4);
             controller.DisplayStatus();
-
+            Console.ReadKey();
         }
     }    
 }
