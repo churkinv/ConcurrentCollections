@@ -10,7 +10,6 @@ namespace ConcurrentDictionary
         int _totalQuantityBought;
         int _totalQuantitySold;
 
-
         public void BuyStock(string item, int quantity) // note this code is not atomic(
         {
             _stock.AddOrUpdate(item, quantity, (key, oldValue) => oldValue + quantity);
