@@ -11,10 +11,10 @@ namespace ConcurrentDictionary
         int _totalQuantitySold;
 
 
-        public void BuyStock(string item, int quantity)
+        public void BuyStock(string item, int quantity) // note this code is not atomic(
         {
             _stock.AddOrUpdate(item, quantity, (key, oldValue) => oldValue + quantity);
-            Interlocked.Add(ref _totalQuantityBought, quantity);
+            Interlocked.Add(ref _totalQuantityBought, quantity); // race conditions can appear here(?) But in our case doesn`t matter as no other code is checking these values at this time
         }
 
         public bool TrySellItem(string item)
@@ -61,7 +61,7 @@ namespace ConcurrentDictionary
 
         internal void DisplayStatus()
         {
-            int totalStock = _stock.Values.Sum();
+            int totalStock = _stock.Values.Sum(); // .Values is not good for perfomance as it basically needs to block all the threads trying to get access to conc.dict.
             System.Console.WriteLine("\r\nBought = " + _totalQuantityBought);
             System.Console.WriteLine("Sold = " + _totalQuantitySold);
             System.Console.WriteLine("Stock = " + totalStock);
@@ -73,12 +73,18 @@ namespace ConcurrentDictionary
 
             System.Console.WriteLine();
             System.Console.WriteLine("Stock level by item");
-            foreach (string itemName in Program.AllShirtNames)
+            foreach (string itemName in Program.AllShirtNames) 
             {
-                int stockLevel = _stock.GetOrAdd(itemName, 0);
+                int stockLevel = _stock.GetOrAdd(itemName, 0); // see alternative below
                 System.Console.WriteLine($"{itemName,-30}: {stockLevel}");
-            }
 
+                #region alternative way
+                //int stockLevel;
+                //bool success = _stock.TryGetValue(itemName, out stockLevel);
+                //if (!success)
+                //    stockLevel = 0;
+                #endregion
+            }
         }
     }
 }

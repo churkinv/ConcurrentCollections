@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace ConcurrentDictionary
 {
@@ -22,8 +18,8 @@ namespace ConcurrentDictionary
             DateTime start = DateTime.Now;
             while (DateTime.Now - start < workDay)
             {
-                Thread.Sleep(rand.Next(100));
-                bool buy = (rand.Next(6) == 0);
+                Thread.Sleep(rand.Next(100)); // by commenting this we can get real stress test of our conc. dict, as all transactions are effected almost at the same time.   
+                bool buy = (rand.Next(6) == 0); // will choose a number between 0-5, and if 0 we buy, so we sell 5 times more than buy 
                 string itemName = Program.AllShirtNames[rand.Next(Program.AllShirtNames.Count)];
                 if (buy)
                 {
@@ -33,7 +29,7 @@ namespace ConcurrentDictionary
                 }
                 else
                 {
-                    bool success = controller.TrySellItem(itemName);
+                    bool success = controller.TrySellItem2(itemName); // or try TrySellItem
                     DisplaySaleAttempt(success, itemName);
                 }
 
