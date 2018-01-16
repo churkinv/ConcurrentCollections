@@ -4,16 +4,23 @@ using System.Threading;
 
 namespace ConcurrentDictionary
 {
-    public class StockController
+    internal class StockController
     {
         ConcurrentDictionary<string, int> _stock = new ConcurrentDictionary<string, int>();
         int _totalQuantityBought;
         int _totalQuantitySold;
+        ToDoQueue _toDoQueue;
+
+        public StockController(ToDoQueue bonusCalculator)
+        {
+            this._toDoQueue = bonusCalculator;
+        }
 
         public void BuyStock(string item, int quantity) // note this code is not atomic(
         {
             _stock.AddOrUpdate(item, quantity, (key, oldValue) => oldValue + quantity);
             Interlocked.Add(ref _totalQuantityBought, quantity); // race conditions can appear here(?) But in our case doesn`t matter as no other code is checking these values at this time
+            _toDoQueue.AddTrade(new Trade(person, -quantity)); // for producer-consumer scrnario
         }
 
         public bool TrySellItem(string item)
@@ -77,7 +84,7 @@ namespace ConcurrentDictionary
                 int stockLevel = _stock.GetOrAdd(itemName, 0); // see alternative below
                 System.Console.WriteLine($"{itemName,-30}: {stockLevel}");
 
-                #region alternative way
+                #region Alternative way
                 //int stockLevel;
                 //bool success = _stock.TryGetValue(itemName, out stockLevel);
                 //if (!success)
