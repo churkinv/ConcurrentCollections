@@ -41,14 +41,14 @@ namespace ConcurrentDictionary
         {
             int threadId = Thread.CurrentThread.ManagedThreadId;
             if (success)
-                Console.WriteLine(string.Format("Thread {0}: {1} sold {2}", threadId, this.Name, itemName));
+                Console.WriteLine(string.Format($"Thread {threadId}: {this.Name} sold {itemName}"));
             else
-                Console.WriteLine(string.Format("Thread {0}: {1}: Out of stock of {2}", threadId, this.Name, itemName));
+                Console.WriteLine(string.Format($"Thread {threadId}: {this.Name}: Out of stock of {itemName}"));
         }
 
         private void DisplayPurchase(string itemName, int quantity)
         {
-            Console.WriteLine("Thread {0}: {1} bought {2} of {3}", Thread.CurrentThread.ManagedThreadId, this.Name, quantity, itemName);
+            Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId}: {this.Name} bought {quantity} of {itemName}");
         }
     }
 }
