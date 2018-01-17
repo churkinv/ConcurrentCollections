@@ -16,14 +16,14 @@ namespace ConcurrentDictionary
             this._toDoQueue = bonusCalculator;
         }
 
-        public void BuyStock(string item, int quantity) // note this code is not atomic(
+        public void BuyStock(SalesPerson person, string item, int quantity) // note this code is not atomic(
         {
             _stock.AddOrUpdate(item, quantity, (key, oldValue) => oldValue + quantity);
             Interlocked.Add(ref _totalQuantityBought, quantity); // race conditions can appear here(?) But in our case doesn`t matter as no other code is checking these values at this time
             _toDoQueue.AddTrade(new Trade(person, -quantity)); // for producer-consumer scrnario
         }
 
-        public bool TrySellItem(string item)
+        public bool TrySellItem(SalesPerson person, string item)
         {
             bool success = false;
             int newStockLevel = _stock.AddOrUpdate(item,
@@ -42,7 +42,11 @@ namespace ConcurrentDictionary
                     }
                 });
             if (success)
+            {
                 Interlocked.Increment(ref _totalQuantitySold);
+                _toDoQueue.AddTrade(new Trade(person, 1));
+            }
+               
             return success;
         }
 

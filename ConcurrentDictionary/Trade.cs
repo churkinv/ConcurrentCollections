@@ -1,14 +1,16 @@
 ﻿namespace ConcurrentDictionary
 {
-    internal class Trade
+    public class Trade
     {
-        private object person;
-        private int v;
+        public SalesPerson Person { get; private set; }
 
-        public Trade(object person, int v)
+        //QuantitySold is negative if thr trade was a purchase
+        public int QuantitySold { get; private set; }
+
+        public Trade(SalesPerson person, int quantitySold)
         {
-            this.person = person;
-            this.v = v;
+            this.Person = person;
+            this.QuantitySold = quantitySold;
         }
     }
 }
