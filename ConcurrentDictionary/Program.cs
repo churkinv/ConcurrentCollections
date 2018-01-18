@@ -6,7 +6,7 @@ namespace ConcurrentDictionary
 {
     class Program
     {
-        public static readonly List<string> AllShirtNames = new List<string> {"RickAndMorty", "ChipAndDale", "MarmaidTheCyborg", "StarCraft", "Genius" };
+        public static readonly List<string> AllShirtNames = new List<string> { "RickAndMorty", "ChipAndDale", "MarmaidTheCyborg", "StarCraft", "Genius" };
 
         static void Main(string[] args)
         {
@@ -36,17 +36,29 @@ namespace ConcurrentDictionary
             //Console.ReadKey();
             #endregion
 
-            StockController controller = new StockController();
-            TimeSpan workDay = new TimeSpan(0, 0, 2);
+            StaffLogsForBonuses staffLogs = new StaffLogsForBonuses();
+            ToDoQueue toDoQueue = new ToDoQueue(staffLogs);
 
-            Task t1 = Task.Run(() => new SalesPerson("Jonhy").Work(controller, workDay));
-            Task t2 = Task.Run(() => new SalesPerson("Cameron").Work(controller, workDay));
-            Task t3 = Task.Run(() => new SalesPerson("Shiller").Work(controller, workDay));
-            Task t4 = Task.Run(() => new SalesPerson("Emma").Work(controller, workDay));
+            SalesPerson[] people = { new SalesPerson ("Robert"), new SalesPerson ("Emma"), new SalesPerson ("Arnold"), new SalesPerson ("Cameron") };
+
+            StockController controller = new StockController(toDoQueue);
+            TimeSpan workDay = new TimeSpan(0, 0, 1);
+
+            Task t1 = Task.Run(() => people[0].Work(controller, workDay));
+            Task t2 = Task.Run(() => people[0].Work(controller, workDay));
+            Task t3 = Task.Run(() => people[0].Work(controller, workDay));
+            Task t4 = Task.Run(() => people[0].Work(controller, workDay));
+
+            Task bonusLogger = Task.Run(() => toDoQueue.MonitorAndLogTrates());
+            Task bonusLogger2 = Task.Run(() => toDoQueue.MonitorAndLogTrates());
 
             Task.WaitAll(t1, t2, t3, t4);
+            toDoQueue.CompleteAdding();
+            Task.WaitAll(bonusLogger, bonusLogger2);
+
             controller.DisplayStatus();
+            staffLogs.DisplayReport(people);
             Console.ReadKey();
         }
-    }    
+    }
 }

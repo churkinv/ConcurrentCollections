@@ -8,5 +8,10 @@ namespace ConcurrentDictionary
         {
             throw new NotImplementedException();
         }
+
+        internal void DisplayReport(SalesPerson[] people)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
