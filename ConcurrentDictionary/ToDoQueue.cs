@@ -34,7 +34,7 @@ namespace ConcurrentDictionary
                 if (done)
                 {
                     _staffLogsForBonuses.ProcessTrade(nextTrade);
-                    Console.WriteLine("Processing transaction frim " + nextTrade.Person.Name);
+                    Console.WriteLine("Processing transaction from " + nextTrade.Person.Name);
                 }
                 else if (_workingDayComplete)
                 {

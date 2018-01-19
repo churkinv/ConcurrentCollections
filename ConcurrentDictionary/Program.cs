@@ -45,9 +45,9 @@ namespace ConcurrentDictionary
             TimeSpan workDay = new TimeSpan(0, 0, 1);
 
             Task t1 = Task.Run(() => people[0].Work(controller, workDay));
-            Task t2 = Task.Run(() => people[0].Work(controller, workDay));
-            Task t3 = Task.Run(() => people[0].Work(controller, workDay));
-            Task t4 = Task.Run(() => people[0].Work(controller, workDay));
+            Task t2 = Task.Run(() => people[1].Work(controller, workDay));
+            Task t3 = Task.Run(() => people[2].Work(controller, workDay));
+            Task t4 = Task.Run(() => people[3].Work(controller, workDay));
 
             Task bonusLogger = Task.Run(() => toDoQueue.MonitorAndLogTrates());
             Task bonusLogger2 = Task.Run(() => toDoQueue.MonitorAndLogTrates());

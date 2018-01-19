@@ -54,7 +54,7 @@ namespace ConcurrentDictionary
         // so we have simpler code
         // but this method could have worse perfomance in some cases
         // stock level could be negative
-        public bool TrySellItem2(string item)
+        public bool TrySellItem2(SalesPerson person, string item)
         {
             int newStockLevel = _stock.AddOrUpdate(item, -1, (key, oldValue) => oldValue - 1);
             if (newStockLevel < 0)
@@ -65,6 +65,7 @@ namespace ConcurrentDictionary
             else
             {
                 Interlocked.Increment(ref _totalQuantitySold);
+                _toDoQueue.AddTrade(new Trade(person, 1));
                 return true;
             }
         }

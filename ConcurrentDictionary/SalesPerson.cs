@@ -24,17 +24,17 @@ namespace ConcurrentDictionary
                 if (buy)
                 {
                     int quantity = rand.Next(9) + 1;
-                    controller.BuyStock(itemName, quantity);
+                    controller.BuyStock(this, itemName, quantity);
                     DisplayPurchase(itemName, quantity);
                 }
                 else
                 {
-                    bool success = controller.TrySellItem2(itemName); // or try TrySellItem
+                    bool success = controller.TrySellItem(this, itemName); // or try TrySellItem2
                     DisplaySaleAttempt(success, itemName);
                 }
 
             }
-            Console.WriteLine($"SalesPerson {this.Name}");
+            Console.WriteLine($"SalesPerson {this.Name} signing off");
         }
 
         private void DisplaySaleAttempt(bool success, string itemName)
